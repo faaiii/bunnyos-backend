@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BunnyOS.Domain", "BunnyOS.Domain\BunnyOS.Domain.csproj", "{72B9A87D-5227-4C91-B6D0-814B77E941A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BunnyOS.Application", "BunnyOS.Application\BunnyOS.Application.csproj", "{1BCAC54F-50AC-4D09-BEE0-62EA0550C0DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BunnyOS.Infrastructure", "BunnyOS.Infrastructure\BunnyOS.Infrastructure.csproj", "{56EEB996-0A8E-4A4E-B1B9-6277890F52EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BunnyOS.Ai", "BunnyOS.Ai\BunnyOS.Ai.csproj", "{BCE39810-0431-4DE5-B164-807CAF8BCDAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BunnyOS.Api", "BunnyOS.Api\BunnyOS.Api.csproj", "{2B969D12-5470-4D13-A92C-0B316D2BF1C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BunnyOS.Tests", "BunnyOS.Tests\BunnyOS.Tests.csproj", "{A75872FB-8139-44AF-BD8B-7EAD6F531381}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72B9A87D-5227-4C91-B6D0-814B77E941A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B9A87D-5227-4C91-B6D0-814B77E941A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B9A87D-5227-4C91-B6D0-814B77E941A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B9A87D-5227-4C91-B6D0-814B77E941A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BCAC54F-50AC-4D09-BEE0-62EA0550C0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BCAC54F-50AC-4D09-BEE0-62EA0550C0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BCAC54F-50AC-4D09-BEE0-62EA0550C0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BCAC54F-50AC-4D09-BEE0-62EA0550C0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EEB996-0A8E-4A4E-B1B9-6277890F52EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EEB996-0A8E-4A4E-B1B9-6277890F52EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EEB996-0A8E-4A4E-B1B9-6277890F52EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EEB996-0A8E-4A4E-B1B9-6277890F52EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE39810-0431-4DE5-B164-807CAF8BCDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE39810-0431-4DE5-B164-807CAF8BCDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE39810-0431-4DE5-B164-807CAF8BCDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE39810-0431-4DE5-B164-807CAF8BCDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B969D12-5470-4D13-A92C-0B316D2BF1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B969D12-5470-4D13-A92C-0B316D2BF1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B969D12-5470-4D13-A92C-0B316D2BF1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B969D12-5470-4D13-A92C-0B316D2BF1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75872FB-8139-44AF-BD8B-7EAD6F531381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75872FB-8139-44AF-BD8B-7EAD6F531381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75872FB-8139-44AF-BD8B-7EAD6F531381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75872FB-8139-44AF-BD8B-7EAD6F531381}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

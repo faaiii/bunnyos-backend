@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: bunnyos-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore
+    healthCheckPath: /health
+    envVars:
+      - key: ConnectionStrings__Postgres
+        value: "Host=aws-0-ap-northeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.qapiiusoraxqwufkygsr;Password=#c3E#zb&67d@S_N;SSL Mode=Require;Trust Server Certificate=true;"
+      - key: EmailSettings__SenderEmail
+        value: "bdfaisal971@gmail.com"
+      - key: EmailSettings__SenderName
+        value: "BunnyOS Security"
+      - key: EmailSettings__SmtpUsername
+        value: "bdfaisal971@gmail.com"
+      - key: EmailSettings__SmtpPassword
+        value: "dqqkhgcgghwmnqly"
+      - key: EmailSettings__SmtpHost
+        value: "smtp.gmail.com"
+      - key: EmailSettings__SmtpPort
+        value: "587"
+      - key: EmailSettings__EnableSsl
+        value: "true"
+      - key: EmailSettings__IsLive
+        value: "true"
+      - key: UseInMemoryDb
+        value: "false"
