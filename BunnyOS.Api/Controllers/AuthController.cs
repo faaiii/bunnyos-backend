@@ -85,8 +85,16 @@ public class AuthController : ControllerBase
 
         await _db.SaveChangesAsync();
 
-        // Send OTP verification email
-        await _emailService.SendOtpEmailAsync(user.Email, otpCode, "BunnyOS অ্যাকাউন্ট ভেরিফিকেশন");
+        // Send OTP verification email in background without blocking API response
+        var targetEmail = user.Email;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await _emailService.SendOtpEmailAsync(targetEmail, otpCode, "BunnyOS অ্যাকাউন্ট ভেরিফিকেশন");
+            }
+            catch { }
+        });
 
         return Ok(new
         {
@@ -218,8 +226,16 @@ public class AuthController : ControllerBase
 
         await _db.SaveChangesAsync();
 
-        // Send OTP verification email from bdfaisal971@gmail.com TO user.Email (the logging-in user)
-        await _emailService.SendOtpEmailAsync(user.Email, otpCode, "BunnyOS লগইন ভেরিফিকেশন");
+        // Send OTP verification email in background without blocking API response
+        var targetEmail = user.Email;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await _emailService.SendOtpEmailAsync(targetEmail, otpCode, "BunnyOS লগইন ভেরিফিকেশন");
+            }
+            catch { }
+        });
 
         return Ok(new
         {

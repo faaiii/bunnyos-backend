@@ -92,7 +92,8 @@ public class EmailService : IEmailService
             using var client = new SmtpClient(host, port)
             {
                 Credentials = new NetworkCredential(username, password),
-                EnableSsl = enableSsl
+                EnableSsl = enableSsl,
+                Timeout = 4000
             };
 
             using var message = new MailMessage

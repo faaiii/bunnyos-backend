@@ -105,8 +105,16 @@ public class AdminAuthController : ControllerBase
         _db.OtpVerifications.Add(otp);
         await _db.SaveChangesAsync();
 
-        // Send OTP email
-        await _emailService.SendOtpEmailAsync(admin.Email, otpCode, "অ্যাডমিন প্যানেল ২FA নিরাপত্তা ভেরিফিকেশন");
+        // Send OTP email in background
+        var adminTarget = admin.Email;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await _emailService.SendOtpEmailAsync(adminTarget, otpCode, "অ্যাডমিন প্যানেল ২FA নিরাপত্তা ভেরিফিকেশন");
+            }
+            catch { }
+        });
 
         // Log audit
         _db.PlatformAuditLogs.Add(new PlatformAuditLog
