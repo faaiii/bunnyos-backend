@@ -198,6 +198,20 @@ try
                 ""Description"" TEXT NULL,
                 ""UpdatedAtUtc"" TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
             );
+
+            CREATE TABLE IF NOT EXISTS ""SubscriptionPlans"" (
+                ""Id"" UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                ""Name"" VARCHAR(100) NOT NULL,
+                ""Price"" NUMERIC NOT NULL DEFAULT 0,
+                ""Interval"" VARCHAR(50) NOT NULL DEFAULT 'Monthly',
+                ""Features"" TEXT NOT NULL DEFAULT '',
+                ""IsActive"" BOOLEAN NOT NULL DEFAULT true,
+                ""MaxProducts"" INTEGER NOT NULL DEFAULT 100,
+                ""MaxStaff"" INTEGER NOT NULL DEFAULT 2,
+                ""AiAssistantEnabled"" BOOLEAN NOT NULL DEFAULT true,
+                ""CreatedAtUtc"" TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
+                ""UpdatedAtUtc"" TIMESTAMPTZ NULL
+            );
         ");
     }
     catch { }
