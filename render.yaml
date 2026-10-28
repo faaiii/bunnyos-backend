@@ -6,6 +6,7 @@ services:
     plan: free
     region: singapore
     healthCheckPath: /health
+    autoDeploy: true
     envVars:
       - key: ConnectionStrings__Postgres
         value: "Host=aws-0-ap-northeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.qapiiusoraxqwufkygsr;Password=#c3E#zb&67d@S_N;SSL Mode=Require;Trust Server Certificate=true;"

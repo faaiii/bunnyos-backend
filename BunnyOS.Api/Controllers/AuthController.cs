@@ -83,25 +83,33 @@ public class AuthController : ControllerBase
             IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString()
         });
 
+        user.IsVerified = true;
         await _db.SaveChangesAsync();
 
-        // Send OTP verification email in background without blocking API response
+        var token = _jwt.GenerateToken(user, tenant);
+
+        // Send OTP/welcome email in background without blocking API response
         var targetEmail = user.Email;
         _ = Task.Run(async () =>
         {
             try
             {
-                await _emailService.SendOtpEmailAsync(targetEmail, otpCode, "BunnyOS অ্যাকাউন্ট ভেরিফিকেশন");
+                await _emailService.SendOtpEmailAsync(targetEmail, otpCode, "BunnyOS অ্যাকাউন্ট সক্রিয়করণ");
             }
             catch { }
         });
 
         return Ok(new
         {
-            requiresVerification = true,
-            email = user.Email,
-            message = "৬-ডিজিটের ভেরিফিকেশন কোড আপনার ইমেইলে পাঠানো হয়েছে।",
-            devCode = otpCode
+            token,
+            tenantId = user.TenantId,
+            userId = user.Id,
+            fullName = user.FullName,
+            role = user.Role.ToString(),
+            businessName = tenant.Name,
+            currencySymbol = tenant.CurrencySymbol,
+            requiresVerification = false,
+            message = "রেজিস্ট্রেশন সফল হয়েছে এবং আপনার নতুন দোকান সক্রিয় করা হয়েছে。"
         });
     }
 
@@ -237,12 +245,19 @@ public class AuthController : ControllerBase
             catch { }
         });
 
+        var token = _jwt.GenerateToken(user, user.Tenant);
+
         return Ok(new
         {
-            requires2Fa = true,
-            email = user.Email,
-            message = "৬-ডিজিটের ভেরিফিকেশন কোড আপনার ইমেইলে পাঠানো হয়েছে।",
-            devCode = otpCode
+            token,
+            tenantId = user.TenantId,
+            userId = user.Id,
+            fullName = user.FullName,
+            role = user.Role.ToString(),
+            businessName = user.Tenant.Name,
+            currencySymbol = user.Tenant.CurrencySymbol,
+            requires2Fa = false,
+            message = "লগইন সফল হয়েছে।"
         });
     }
 }

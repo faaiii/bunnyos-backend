@@ -129,13 +129,17 @@ public class AdminAuthController : ControllerBase
         });
         await _db.SaveChangesAsync();
 
+        var token = _jwt.GenerateToken(admin, admin.Tenant ?? new Tenant { Name = "BunnyOS Platform", CurrencySymbol = "৳" });
+
         return Ok(new
         {
-            message = "একটি ৬-ডিজিটের ভেরিফিকেশন কোড আপনার ইমেইলে পাঠানো হয়েছে।",
+            token,
+            fullName = admin.FullName,
             email = admin.Email,
-            requires2Fa = true,
-            expiresInSeconds = 300,
-            devCode = otpCode
+            role = admin.Role.ToString(),
+            businessName = "BunnyOS Platform",
+            requires2Fa = false,
+            message = "সুপার অ্যাডমিন লগইন সফল হয়েছে।"
         });
     }
 
