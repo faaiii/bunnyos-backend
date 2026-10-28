@@ -70,7 +70,7 @@ public class SaleItem : TenantEntity
 {
     public Guid SaleId { get; set; }
     public Sale? Sale { get; set; }
-    public Guid ProductId { get; set; }
+    public Guid? ProductId { get; set; }
     public Product? Product { get; set; }
 
     public string ProductNameSnapshot { get; set; } = string.Empty;

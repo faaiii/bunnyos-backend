@@ -131,7 +131,7 @@ public class ReportsController : ControllerBase
                 s.PaymentMethod,
                 s.Status.ToString(),
                 s.CreatedAtUtc,
-                s.Items.Select(i => new BunnyOS.Application.DTOs.SaleItemDto(i.ProductId, i.ProductNameSnapshot, i.UnitCostPrice, i.UnitSellingPrice, i.Quantity, i.TotalPrice)).ToList()
+                s.Items.Select(i => new BunnyOS.Application.DTOs.SaleItemDto(i.ProductId ?? Guid.Empty, i.ProductNameSnapshot, i.UnitCostPrice, i.UnitSellingPrice, i.Quantity, i.TotalPrice)).ToList()
             )).ToListAsync();
 
         var lowStockProducts = await _db.Products
