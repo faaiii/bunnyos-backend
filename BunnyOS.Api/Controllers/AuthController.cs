@@ -260,6 +260,93 @@ public class AuthController : ControllerBase
             message = "লগইন সফল হয়েছে।"
         });
     }
+
+    [HttpPost("social-login")]
+    public async Task<IActionResult> SocialLogin([FromBody] SocialLoginRequest req)
+    {
+        if (string.IsNullOrWhiteSpace(req.Email))
+            return BadRequest("ইমেইল আবশ্যক।");
+
+        var cleanEmail = req.Email.Trim().ToLowerInvariant();
+        var user = await _db.Users.IgnoreQueryFilters().Include(u => u.Tenant).FirstOrDefaultAsync(u => u.Email.ToLower() == cleanEmail);
+
+        Tenant tenant;
+        if (user == null)
+        {
+            var businessTitle = !string.IsNullOrWhiteSpace(req.BusinessName)
+                ? req.BusinessName
+                : (!string.IsNullOrWhiteSpace(req.FullName) ? $"{req.FullName}-এর ব্যবসা" : "আমার ব্যবসা");
+
+            tenant = new Tenant
+            {
+                Name = businessTitle,
+                Phone = string.Empty,
+                Currency = "BDT",
+                CurrencySymbol = "৳"
+            };
+            _db.Tenants.Add(tenant);
+
+            user = new User
+            {
+                FullName = !string.IsNullOrWhiteSpace(req.FullName) ? req.FullName : $"{req.Provider} ব্যবহারকারী",
+                Email = cleanEmail,
+                Phone = string.Empty,
+                PasswordHash = PasswordHasher.HashPassword(Guid.NewGuid().ToString("N")),
+                Role = UserRole.Owner,
+                TenantId = tenant.Id,
+                IsVerified = true,
+                LastLoginAtUtc = DateTime.UtcNow
+            };
+            _db.Users.Add(user);
+
+            _db.PlatformAuditLogs.Add(new PlatformAuditLog
+            {
+                ActorEmail = user.Email,
+                ActorRole = user.Role.ToString(),
+                Action = $"SocialRegistration_{req.Provider}",
+                TargetResource = tenant.Name,
+                Result = "Success",
+                Details = $"New store '{tenant.Name}' created via {req.Provider} social login for {user.FullName} ({user.Email}).",
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString()
+            });
+
+            await _db.SaveChangesAsync();
+        }
+        else
+        {
+            tenant = user.Tenant ?? await _db.Tenants.FindAsync(user.TenantId) ?? new Tenant { Name = "আমার ব্যবসা", Currency = "BDT", CurrencySymbol = "৳" };
+            user.IsVerified = true;
+            user.LastLoginAtUtc = DateTime.UtcNow;
+
+            _db.PlatformAuditLogs.Add(new PlatformAuditLog
+            {
+                ActorEmail = user.Email,
+                ActorRole = user.Role.ToString(),
+                Action = $"SocialLogin_{req.Provider}",
+                TargetResource = tenant.Name,
+                Result = "Success",
+                Details = $"User {user.FullName} ({user.Email}) logged in via {req.Provider}.",
+                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString()
+            });
+
+            await _db.SaveChangesAsync();
+        }
+
+        var token = _jwt.GenerateToken(user, tenant);
+
+        return Ok(new
+        {
+            token,
+            tenantId = user.TenantId,
+            userId = user.Id,
+            fullName = user.FullName,
+            role = user.Role.ToString(),
+            businessName = tenant.Name,
+            currencySymbol = tenant.CurrencySymbol,
+            provider = req.Provider,
+            message = $"{req.Provider} দিয়ে সফলভাবে লগইন সম্পন্ন হয়েছে।"
+        });
+    }
 }
 
 public record ResendOtpRequest(string Email);

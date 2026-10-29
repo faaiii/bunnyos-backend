@@ -8,6 +8,7 @@ public record RegisterRequest(string FullName, string Email, string? Phone = nul
 public record LoginRequest(string Email, string Password);
 public record AuthResponse(string Token, Guid TenantId, Guid UserId, string FullName, string Role, string BusinessName, string CurrencySymbol);
 public record BusinessSetupRequest(string BusinessName, string Tagline, string Phone, string Address, string Currency);
+public record SocialLoginRequest(string Provider, string Email, string FullName = "", string BusinessName = "", string? ProviderKey = null, string? PhotoUrl = null);
 #endregion
 
 #region Product DTOs
